@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Form with JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-container button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:disabled {
+            background-color: #ddd;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Sign Up Form</h2>
+        <form id="signupForm">
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button type="submit" id="submitBtn" disabled>Submit</button>
+            <p class="error" id="errorMessage"></p>
+        </form>
+    </div>
+
+    <script>
+        // Event listener to enable/disable submit button based on form input
+        const nameField = document.getElementById('name');
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Function to check form fields
+        function checkFormValidity() {
+            if (nameField.value && emailField.value && passwordField.value) {
+                submitBtn.disabled = false;
+                errorMessage.textContent = '';  // Clear error message if form is valid
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Event listeners for form fields
+        nameField.addEventListener('input', checkFormValidity);
+        emailField.addEventListener('input', checkFormValidity);
+        passwordField.addEventListener('input', checkFormValidity);
+
+        // Form submit event listener
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form submission to handle validation
+            
+            // Basic validation for email format
+            const emailValue = emailField.value;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            
+            if (!emailPattern.test(emailValue)) {
+                errorMessage.textContent = 'Please enter a valid email address.';
+                return;
+            }
+            
+            // Show success message on valid form submission
+            alert('Form submitted successfully!');
+        });
+    </script>
+
+</body>
+</html>
